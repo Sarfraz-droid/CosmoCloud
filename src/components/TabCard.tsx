@@ -15,26 +15,29 @@ function TabCard({ tab, depth }: { tab: TabState; depth: number }) {
 	const inputRef = React.useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		// console.log("tab changed", debouncedTab);
 		updateTab(currentTab.parent, currentTab);
 	}, [currentTab]);
+
+	useEffect(() => {
+		if (tab.id !== currentTab.id) setCurrentTab(tab);
+	}, [tab]);
 
 	return (
 		<motion.div
 			className="w-full flex flex-col border-l-2 border-black/20 border-dotted"
-			initial={{
-				opacity: 0,
-				y: -10,
-			}}
-			animate={{
-				opacity: 1,
-				y: 0,
-				marginTop: "0%",
-			}}
-			exit={{
-				opacity: 0,
-				y: -10,
-			}}
+			// initial={{
+			// 	opacity: 0,
+			// 	y: -10,
+			// }}
+			// animate={{
+			// 	opacity: 1,
+			// 	y: 0,
+			// 	marginTop: "0%",
+			// }}
+			// exit={{
+			// 	opacity: 0,
+			// 	y: -10,
+			// }}
 			transition={{ duration: 0.5 }}>
 			<div className="bg-slate-100/20 m-1 p-1 flex flex-grow border-slate-300 gap-2 group ">
 				<div className="flex flex-grow gap-3 ml-3">
@@ -42,8 +45,8 @@ function TabCard({ tab, depth }: { tab: TabState; depth: number }) {
 						{!isEditing ? (
 							<motion.h1
 								initial={{
-									y: -10,
-									opacity: 0,
+									y: 0,
+									opacity: 1,
 								}}
 								animate={{
 									y: 0,
@@ -183,7 +186,7 @@ function TabCard({ tab, depth }: { tab: TabState; depth: number }) {
 						type="button"
 						className="p-1 rounded-md hover:opacity-60"
 						onClick={() => {
-							console.log("delete tab");
+							// console.log("delete tab");
 							removeTab(currentTab.parent, currentTab);
 							setCurrentTab({ ...currentTab });
 						}}>
@@ -204,13 +207,13 @@ function TabCard({ tab, depth }: { tab: TabState; depth: number }) {
 				</motion.div>
 			</div>
 			<div className="ml-10">
-				{tab.type === TabType.Object && (
+				{currentTab.type === TabType.Object && (
 					<div className="flex flex-col gap-2">
-						<AnimatePresence>
-							{tab.children.map((child, index) => (
-								<TabCard tab={child} key={index} depth={depth + 1} />
-							))}
-						</AnimatePresence>
+						{/* <AnimatePresence> */}
+						{currentTab.children.map((child, index) => (
+							<TabCard tab={child} key={index} depth={depth + 1} />
+						))}
+						{/* </AnimatePresence> */}
 					</div>
 				)}
 			</div>

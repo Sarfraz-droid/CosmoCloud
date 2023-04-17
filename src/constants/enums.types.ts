@@ -9,7 +9,7 @@ export enum TabType {
 
 export const getDefaultState = (parent: Array<string> = [], type: TabType = TabType.String) => {
     const state: TabState = {
-        name: `NewTab_${window.crypto.randomUUID().slice(0, 5)}}`,
+        name: `NewTab_${window.crypto.randomUUID().slice(0, 5)}`,
         type: type,
         children: [],
         required: false,
