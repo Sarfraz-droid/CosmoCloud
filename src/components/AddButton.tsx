@@ -37,8 +37,8 @@ function AddButton({ onClick }: { onClick: (type: TabType) => void }) {
 						TabType.Number,
 						TabType.String,
 						TabType.Object,
-					].map((type) => (
-						<Menu.Item as={Fragment}>
+					].map((type, key) => (
+						<Menu.Item as={Fragment} key={key}>
 							{({ active }) => (
 								<button
 									title={type}

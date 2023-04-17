@@ -13,10 +13,6 @@ export const TabContext = createContext({
 function TabProvider({ children }: { children: React.ReactNode }) {
 	const [tabData, setTabData] = useState<Array<TabState>>([]);
 
-	useEffect(() => {
-		console.log("tabData changed", tabData);
-	}, [tabData]);
-
 	const findTab = (
 		parent: Array<string>,
 		index: number,
@@ -25,12 +21,12 @@ function TabProvider({ children }: { children: React.ReactNode }) {
 		operation: "update" | "remove" | "add"
 	) => {
 		if (parent[index] === curr.id) {
-			console.log("Pathfinding", index, parent[index], parent.length, curr.id);
+			// console.log("Pathfinding", index, parent[index], parent.length, curr.id);
 			if (index === parent.length - 1) {
 				if (operation === "update") curr = item;
 				else if (operation === "add") curr.children.push(item);
 				else if (operation === "remove") {
-					console.log("Removing", curr, curr.children, item);
+					// console.log("Removing", curr, curr.children, item);
 					curr.children = curr.children.filter((child) => child.id !== item.id);
 				}
 			} else {
@@ -47,7 +43,7 @@ function TabProvider({ children }: { children: React.ReactNode }) {
 	};
 
 	const addTab = (parent: TabState | null, item: TabState) => {
-		console.log("addTab", parent, item);
+		// console.log("addTab", parent, item);
 		if (parent == null) {
 			setTabData((prev) => [...prev, item]);
 		} else {
@@ -88,6 +84,10 @@ function TabProvider({ children }: { children: React.ReactNode }) {
 	};
 
 	const updateTab = (parent: Array<string>, item: TabState) => {
+		if (item.type != TabType.Object) {
+			item.children = [];
+		}
+
 		if (parent.length == 0) {
 			setTabData((prev) =>
 				prev.map((tab) => (tab.id === item.id ? item : tab))

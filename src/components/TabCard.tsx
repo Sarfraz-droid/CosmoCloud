@@ -128,8 +128,8 @@ function TabCard({ tab, depth }: { tab: TabState; depth: number }) {
 									TabType.Number,
 									TabType.String,
 									TabType.Object,
-								].map((type) => (
-									<Menu.Item>
+								].map((type, key) => (
+									<Menu.Item key={key}>
 										{({ active }) => (
 											<button
 												title={type}
@@ -207,8 +207,8 @@ function TabCard({ tab, depth }: { tab: TabState; depth: number }) {
 				{tab.type === TabType.Object && (
 					<div className="flex flex-col gap-2">
 						<AnimatePresence>
-							{tab.children.map((child) => (
-								<TabCard tab={child} key={child.id} depth={depth + 1} />
+							{tab.children.map((child, index) => (
+								<TabCard tab={child} key={index} depth={depth + 1} />
 							))}
 						</AnimatePresence>
 					</div>
